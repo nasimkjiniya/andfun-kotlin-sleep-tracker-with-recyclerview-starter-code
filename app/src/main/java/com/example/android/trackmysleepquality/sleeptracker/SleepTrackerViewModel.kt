@@ -225,6 +225,7 @@ class SleepTrackerViewModel(
         }
     }
 
+
     /**
      * Executes when the CLEAR button is clicked.
      */

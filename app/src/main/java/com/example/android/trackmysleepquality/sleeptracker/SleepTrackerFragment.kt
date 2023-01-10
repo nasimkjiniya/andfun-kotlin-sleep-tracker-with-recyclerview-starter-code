@@ -68,7 +68,7 @@ class SleepTrackerFragment : Fragment() {
         binding.sleepList.layoutManager = manager
 
         var adapter = SleepNightAdapter(SleepNightAdapter.SleepNightListener{ nightId ->
-            Toast.makeText(context, "${nightId}", Toast.LENGTH_LONG).show()
+            sleepTrackerViewModel.onSleepNightClicked(nightId)
         })
 
         binding.sleepList.adapter=adapter
@@ -110,6 +110,14 @@ class SleepTrackerFragment : Fragment() {
                 // Reset state to make sure we only navigate once, even if the device
                 // has a configuration change.
                 sleepTrackerViewModel.doneNavigating()
+            }
+        })
+
+        sleepTrackerViewModel.navigateToSleepDataQuality.observe(viewLifecycleOwner, Observer {nightId->
+            nightId?.let {
+                this.findNavController().navigate(SleepTrackerFragmentDirections
+                    .actionSleepTrackerFragmentToSleepDetailFragment(nightId))
+                sleepTrackerViewModel.onSleepDataQualityNavigated()
             }
         })
 
