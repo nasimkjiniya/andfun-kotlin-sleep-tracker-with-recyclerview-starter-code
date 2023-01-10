@@ -63,6 +63,15 @@ class SleepTrackerFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
+        var adapter = SleepNightAdapter()
+        binding.sleepList.adapter=adapter
+        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer { it->
+            it.let {
+                adapter.data=it
+            }
+        })
+
+
         // Add an Observer on the state variable for showing a Snackbar message
         // when the CLEAR button is pressed.
         sleepTrackerViewModel.showSnackBarEvent.observe(viewLifecycleOwner, Observer {
